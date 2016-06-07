@@ -1,0 +1,26 @@
+---
+- hosts: control
+  tasks:
+    - name: set mpapis public key
+      become: yes
+      shell: "gpg2 --keyserver hkp://keys.gnupg.net --recv-keys 409B6B1796C275462A1703113804BB82D39DC0E3"
+      args:
+        executable: /bin/bash
+    - name: install rvm
+      become: yes
+      get_url: url=https://get.rvm.io dest=/bin/bash
+    - name: install ruby
+      shell: "rvm install ruby-2.2"
+    - name: install postgresql
+      homebrew: name=postgresql
+    - name: install redis
+      homebrew: name=redis
+    - name: install imagemagick
+      homebrew: name=imagemagick
+    - name: install iterm2
+      homebrew_cask: name=iterm2
+    - name: install slack
+      homebrew_cask: name=slack
+    - name: install ssh-copy-id
+      become: yes
+      get_url: url=https://raw.githubusercontent.com/beautifulcode/ssh-copy-id-for-OSX/master/install.sh dest=/bin/sh
